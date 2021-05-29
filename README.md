@@ -9,3 +9,4 @@ The app will remember the last 10 items searched.
 https://buneroskoviche.github.io/WeatherDashboard/
 
 ## Screenshot
+![screenshot](https://user-images.githubusercontent.com/80650523/120057767-f6527a00-c002-11eb-8eeb-f9b9c01f5c77.PNG)
