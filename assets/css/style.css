@@ -23,3 +23,8 @@ header {
     height: 250px;
     width: 200px;
 }
+
+#UV {
+    padding: 1%;
+    border-radius: 5px;
+}
