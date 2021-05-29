@@ -3,6 +3,10 @@ const $searchText = $("#searchText");
 const $searchCol = $("#searchesColumn");
 const $searchHistory = $("#searchHistory");
 const $cityName = $("#cityName");
+const $temperature = $("#temp");
+const $wind = $("#wind");
+const $humidity = $("#humidity");
+const $uv = $("#UV");
 const api = config.APIkey;
 const historyArray =[];
 
@@ -22,9 +26,11 @@ getWeather = (string) => {
         })
         .then(function (data) {
             if (data.cod === 200) {
+                console.log(data);
                 const latitude = data.coord.lat;
                 const longitude = data.coord.lon;
-                return [latitude, longitude];
+                const name = data.name;
+                return [name, latitude, longitude];
             } else {
                 $cityName.text("Could not find the city")
                 return;
@@ -32,21 +38,28 @@ getWeather = (string) => {
         })
         .then(function (latLon) {
             if (latLon) {
-                const locationUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latLon[0]}&lon=${latLon[1]}&exclude=minutely,hourly,alerts&units=imperial&appid=${api}`
+                const locationUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latLon[1]}&lon=${latLon[2]}&exclude=minutely,hourly,alerts&units=imperial&appid=${api}`
                 fetch(locationUrl)
                 .then(function (response) {
                     return response.json();
                 })
                 .then(function (data) {
-                    displayWeather(data);
+                    displayWeather(latLon[0], data);
                 })
             }
         })
 }
 
 // This function displays the fetched weather forecast
-displayWeather = (object) => {
+displayWeather = (str, object) => {
     console.log(object);
+    $cityName.text(str);
+    $temperature.text(`Temp: ${object.daily[0].temp.day}°F`);
+    $wind.text(`Wind: ${object.daily[0].wind_speed} MPH`);
+    $humidity.text(`Humidity: ${object.daily[0].humidity}%`);
+    $uv.text(`UV Index: ${object.daily[0].uvi}`);
+    // for (let i = 0; i < 5; i++) {
+    // }
 }
 
 // Pull the history from local storage, and create a button for each stored value
