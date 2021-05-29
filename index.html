@@ -15,22 +15,22 @@
         <h1>Weather Dashboard</h1>
     </header>
 
-    <div class="container-fluid">
+    <main class="container-fluid">
 
         <div class="row">
 
-            <div class="col-3" id="searchesColumn">
+            <section class="col-3" id="searchesColumn">
                 <div class="d-grid py-3" id="searchForm">
                     <h2>Search for a city:</h2>
                     <input type="text" class="form-control my-2" placeholder="Enter City Name" id="searchText"></input>
                     <button type="button" class="btn btn-primary my-2" id="searchBtn">Search</button>               
                 </div>
                 <div class="d-grid mt-3" id="searchHistory"></div>
-            </div>
+            </section>
 
             <div class="col-9 bg-secondary" id="weatherDisplay">
-                <div class="bg-white my-2 border border-dark border-2 d-flex flex-column justify-content-between" id="weatherInfo">
-                    <h2 id="cityName">Search for a city!</h2>
+                <div class="bg-primary my-2 border border-dark border-2 d-flex flex-column justify-content-between" id="weatherInfo">
+                    <h2 class="ms-3 text-white" id="cityName">Search for a city!</h2>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" id="temp">Temp:</li>
                         <li class="list-group-item" id="wind">Wind:</li>
@@ -38,18 +38,22 @@
                         <li class="list-group-item" id="UV">UV Index:</li>
                     </ul>
                 </div>
-                <div id="weatherCards"></div>
+                <div class="d-flex flex-wrap" id="weatherCards"></div>
             </div>
 
         </div>
 
-    </div>
+    </main>
 
 
 
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+    ></script>
 <script src="./assets/js/config.js"></script>
 <script src="./assets/js/script.js"></script>
 

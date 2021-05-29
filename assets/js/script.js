@@ -2,6 +2,7 @@ const $searchBtn = $("#searchBtn");
 const $searchText = $("#searchText");
 const $searchCol = $("#searchesColumn");
 const $searchHistory = $("#searchHistory");
+const $weatherCards = $("#weatherCards");
 const $cityName = $("#cityName");
 const $temperature = $("#temp");
 const $wind = $("#wind");
@@ -19,6 +20,7 @@ createBtn = (string) => {
 
 // This function gets the city coordinates on the first fetch, then the forecast on the second
 getWeather = (string) => {
+    $weatherCards.children().remove();
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${string}&appid=${api}`
     fetch(apiUrl)
         .then(function (response) {
@@ -52,14 +54,22 @@ getWeather = (string) => {
 
 // This function displays the fetched weather forecast
 displayWeather = (str, object) => {
-    console.log(object);
-    $cityName.text(str);
+    $cityName.text(`${str} ${moment(object.daily[0].dt, "X").format("M/D/YYYY")}`);
     $temperature.text(`Temp: ${object.daily[0].temp.day}°F`);
     $wind.text(`Wind: ${object.daily[0].wind_speed} MPH`);
     $humidity.text(`Humidity: ${object.daily[0].humidity}%`);
     $uv.text(`UV Index: ${object.daily[0].uvi}`);
-    // for (let i = 0; i < 5; i++) {
-    // }
+    for (let i = 1; i < 6; i++) {
+        const $card = $("<div>").addClass("weatherCard bg-primary m-3");
+        const date = $("<h3>").text(moment(object.daily[i].dt, "X").format("M/D/YYYY")).addClass("ms-2 text-white");
+        const image = $("<img>").attr("src", `http://openweathermap.org/img/wn/${object.daily[i].weather[0].icon}@2x.png`);
+        const temp = $("<li>").text(`Temp: ${object.daily[i].temp.day}°F`).addClass("list-group-item");
+        const wind = $("<li>").text(`Wind: ${object.daily[i].wind_speed} MPH`).addClass("list-group-item");
+        const humid = $("<li>").text(`Humidity: ${object.daily[i].humidity}%`).addClass("list-group-item");
+        const details = $("<ul>").addClass("list-group list-group-flush").append(temp).append(wind).append(humid);
+        $card.append(date).append(image).append(details);
+        $weatherCards.append($card);
+    }
 }
 
 // Pull the history from local storage, and create a button for each stored value

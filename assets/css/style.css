@@ -18,3 +18,8 @@ header {
 #weatherInfo {
     height: 30%;
 }
+
+.weatherCard {
+    height: 250px;
+    width: 200px;
+}
