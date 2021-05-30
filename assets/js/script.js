@@ -19,7 +19,6 @@ createBtn = (string) => {
 
 // This function gets the city coordinates on the first fetch, then the forecast on the second
 getWeather = (string) => {
-    $forecast.children().remove();
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${string}&appid=${api}`
     fetch(apiUrl)
         .then(function (response) {
@@ -52,12 +51,15 @@ getWeather = (string) => {
 
 // This function displays the fetched 5-day weather forecast
 displayWeather = (str, obj) => {
+    // Removes the old weather cards
+    $forecast.children().remove();
     // Changes the text for the weather of the day
     $cityName.text(`${str} ${moment(obj.daily[0].dt, "X").format("M/D/YYYY")}`);
     $temperature.text(`${obj.daily[0].temp.day}°F`);
     $wind.text(`${obj.daily[0].wind_speed} MPH`);
     $humidity.text(`${obj.daily[0].humidity}%`);
     $uv.text(obj.daily[0].uvi);
+    // Checks the severity of the UV index, and chooses a color
     if (obj.daily[0].uvi < 3) {
         $uv.css("background-color", "green");
     } else if (obj.daily[0].uvi >= 3 && obj.daily[0].uvi < 6) {
@@ -65,6 +67,7 @@ displayWeather = (str, obj) => {
     } else if (obj.daily[0].uvi > 6) {
         $uv.css("background-color", "red");
     }
+    // Creates 5 weather cards
     for (let i = 1; i < 6; i++) {
         const $card = $("<div>").addClass("weatherCard bg-primary m-3");
         const date = $("<h3>").text(moment(obj.daily[i].dt, "X").format("M/D/YYYY")).addClass("ms-2 text-white");
